@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h3 class="text-center mt-3">Felvett rendelések</h3>
+        <ngb-accordion [closeOthers]="true" *ngFor="let order of orders">
+            <ngb-panel id="acc-1" title="#{{order.id}} rendelés">
+                <ng-template ngbPanelContent>
+                    Vevő: <strong>{{order.costumer}}</strong>,<br />
+                    Szállítási cím: <strong>{{order.destinationLog}}</strong>,<br />
+                    Rendelt pizzák:<br />
+                    <strong style="white-space: pre;">{{order.pizzaLog}}</strong><br />
+                    Fizetendő: <strong>{{order.priceLog}}.-</strong> Ft
+                    <br />
+                    <ng-container *ngIf="order.status == 'baking';else second">
+                        <p class="text-warning">{{order.waitLog}}</p>
+                    </ng-container>
+                    <ng-template #second>
+                        <ng-container *ngIf="order.status == 'done';else third">
+                            <p class="text-success">{{order.waitLog}}</p>
+                        </ng-container>
+                    </ng-template>
+                    <ng-template #third>
+                        <ng-container *ngIf="order.status == 'waiting';else fourth">
+                            <p>{{order.waitLog}}</p>
+                        </ng-container>
+                    </ng-template>
+                    <ng-template #fourth>
+                        <ng-container>
+                            <p class="text-danger">{{order.waitLog}}</p>
+                        </ng-container>
+                    </ng-template>
+                    <br />
+                    <div style="text-align:center;" class="container mt-2">
+                        <button class="btn btn-outline-danger orderRefresh" [disabled]="order.status != 'waiting'"
+                            (click)="cancelOrder(order)">Rendelés
+                            lemondása</button>
+                    </div>
+
+
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+</div>

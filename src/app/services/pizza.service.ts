@@ -33,6 +33,6 @@ export class PizzaService {
   }
 
   async updatePizza(pizza: Pizza) {
-    return this.http.post('/api/pizza/' + pizza.id, pizza).toPromise();
+    return this.http.post('/api/pizza/', pizza).toPromise();
   }
 }

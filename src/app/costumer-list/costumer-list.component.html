@@ -67,11 +67,11 @@
                         {{costumer.address2}}.</p>
                 </div>
                 <div class="card-footer text-center">
-                    <button class="btn btn-outline-primary col-md-12"
-                        *ngIf="selectedCostumer!=costumer; else buttonSelected"
-                        (click)="selectCostumer(costumer)">Kiválaszt</button>
+                    <button class="btn btn-outline-primary col-md-12" *ngIf="costumer.isSelected == false ; else
+                        buttonSelected" (click)="selectCostumer(costumer)">Kiválaszt</button>
                     <ng-template #buttonSelected><button class=" btn
-                                                    btn-primary btn btn-primary col-md-12">Kiválaszt</button>
+                                                    btn-primary btn btn-primary col-md-12"
+                            (click)="selectCostumer(costumer)">Kiválaszt</button>
                     </ng-template>
                 </div>
             </div>

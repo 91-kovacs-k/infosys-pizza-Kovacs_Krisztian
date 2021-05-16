@@ -25,4 +25,7 @@ export class Costumer {
 
   @Column()
   telephone: string;
+
+  @Column()
+  isSelected: boolean;
 }

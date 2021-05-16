@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { Time } from '../../../src/app/models/oven';
 
 @Entity()
 export class Oven {
@@ -7,7 +6,7 @@ export class Oven {
   id: string;
 
   @Column()
-  ovenTimer: Time;
+  ovenTimer: string;
 
   @Column()
   availability: boolean;

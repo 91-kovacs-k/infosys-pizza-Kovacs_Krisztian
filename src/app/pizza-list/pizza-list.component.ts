@@ -18,6 +18,12 @@ export class PizzaListComponent implements OnInit {
 
   async ngOnInit() {
     this.pizzaArray = await this.pizzaService.loadPizza();
+    for (let i = 0; i < this.pizzaArray.length; i++) {
+      for (let j = 0; j < this.pizzaArray[i].selected; j++) {
+        this.selectedPizza.push(this.pizzaArray[i]);
+      }
+    }
+    //alert(this.pizzaService.selectedPizza);
   }
 
   closeResult = '';
@@ -70,6 +76,10 @@ export class PizzaListComponent implements OnInit {
     this.selectedPizza = [];
     this.pizzaArray.forEach((pizza: Pizza) => (pizza.selected = 0));
     /*
+    this.pizzaArray.forEach((pizza: Pizza) =>
+      this.pizzaService.updatePizza(pizza)
+    );*/
+    /*
     this.costumerIsSelected = false;
     this.selectedCostumer = {
       id: 0,
@@ -89,6 +99,7 @@ export class PizzaListComponent implements OnInit {
     for (let i = 0; i < this.pizzaArray.length; i++) {
       if (this.pizzaArray[i] == pizza) {
         this.pizzaArray[i].selected++;
+        this.pizzaService.updatePizza(this.pizzaArray[i]);
         break;
       }
     }
@@ -99,6 +110,7 @@ export class PizzaListComponent implements OnInit {
     for (let i = 0; i < this.selectedPizza.length; i++) {
       if (this.selectedPizza[i] == pizza) {
         this.selectedPizza.splice(i, 1);
+        this.selectedPizza = this.selectedPizza;
         contained = true;
         break;
       }
@@ -107,6 +119,7 @@ export class PizzaListComponent implements OnInit {
       for (let i = 0; i < this.pizzaArray.length; i++) {
         if (this.pizzaArray[i] == pizza) {
           this.pizzaArray[i].selected--;
+          this.pizzaService.updatePizza(this.pizzaArray[i]);
           break;
         }
       }

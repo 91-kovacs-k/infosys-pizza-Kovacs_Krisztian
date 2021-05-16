@@ -10,9 +10,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { CostumerListComponent } from './costumer-list/costumer-list.component';
 import { CostumerFormComponent } from './costumer-form/costumer-form.component';
+import { OrderComponent } from './order/order.component';
+import { OrderListComponent } from './order-list/order-list.component';
 
 @NgModule({
-  declarations: [AppComponent, PizzaListComponent, PizzaFormComponent, CostumerListComponent, CostumerFormComponent],
+  declarations: [AppComponent, PizzaListComponent, PizzaFormComponent, CostumerListComponent, CostumerFormComponent, OrderComponent, OrderListComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

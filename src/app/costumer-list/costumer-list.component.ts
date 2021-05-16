@@ -29,6 +29,13 @@ export class CostumerListComponent implements OnInit {
     this.costumerArray = await this.costumerService.filterCostumers(
       this.costumerKeyword
     );
+    for (let i = 0; i < this.costumerArray.length; i++) {
+      if (this.costumerArray[i].isSelected == true) {
+        this.selectedCostumer = this.costumerArray[i];
+        this.costumerIsSelected = true;
+        break;
+      }
+    }
   }
 
   async deleteCostumer(id: string) {
@@ -61,8 +68,24 @@ export class CostumerListComponent implements OnInit {
   }
 
   public selectCostumer(costumer: Costumer) {
-    this.selectedCostumer = costumer;
-    this.costumerIsSelected = true;
+    if (this.selectedCostumer != costumer) {
+      this.selectedCostumer = costumer;
+      this.costumerIsSelected = true;
+      for (let i = 0; i < this.costumerArray.length; i++) {
+        if (this.costumerArray[i].id == costumer.id) {
+          this.costumerArray[i].isSelected = true;
+        } else {
+          this.costumerArray[i].isSelected = false;
+        }
+        for (let i = 0; i < this.costumerArray.length; i++) {
+          this.costumerService.updateCostumer(this.costumerArray[i]);
+        }
+      }
+    } else {
+      costumer.isSelected = false;
+      this.costumerService.updateCostumer(costumer);
+      this.resetSelection();
+    }
   }
 
   resetSelection() {
@@ -76,6 +99,7 @@ export class CostumerListComponent implements OnInit {
       address2: 0,
       telephonePrefix: 0,
       telephone: 'null',
+      isSelected: false,
     };
   }
 

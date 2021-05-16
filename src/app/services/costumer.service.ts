@@ -29,4 +29,8 @@ export class CostumerService {
   async deleteCostumer(id: string) {
     return this.http.delete('/api/costumers/' + id).toPromise();
   }
+
+  async updateCostumer(costumer: Costumer) {
+    return this.http.post('/api/costumers/', costumer).toPromise();
+  }
 }

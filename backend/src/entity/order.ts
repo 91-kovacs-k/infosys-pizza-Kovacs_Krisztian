@@ -14,15 +14,31 @@ export class Order {
   id: string;
 
   @Column()
-  selectedCostumer!: Costumer;
+  quantity: number;
 
   @Column()
+  remainingQuantity: number;
+
+  @ManyToMany((type) => Costumer)
+  @JoinTable()
+  costumer: Costumer;
+
+  @ManyToMany((type) => Pizza)
+  @JoinTable()
   selectedPizza: Pizza[];
 
-  @ManyToMany(() => Pizza, (selectedPizza) => selectedPizza.id, {
-    eager: true,
-    cascade: true,
-  })
-  @JoinTable()
-  selectedPizzas: Pizza[];
+  @Column()
+  destinationLog: string;
+
+  @Column()
+  pizzaLog: string;
+
+  @Column()
+  priceLog: string;
+
+  @Column()
+  waitLog: string;
+
+  @Column()
+  status: string;
 }

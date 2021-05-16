@@ -7,4 +7,5 @@ export interface Costumer {
   address2: number; // házszám
   telephonePrefix: number; // szolgáltató
   telephone: string; // telefonszám
+  isSelected: boolean;
 }
