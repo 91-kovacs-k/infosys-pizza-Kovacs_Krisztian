@@ -1,0 +1,81 @@
+<div class="container">
+    <h3 class="text-center mt-3">Válassz vevőt!</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-4 mt-5">
+            <input type="text" placeholder="Kereséshez add meg a vevő nevét" class="form-control"
+                [(ngModel)]="costumerKeyword" (keyup.enter)="searchCostumer()">
+        </div>
+        <div class="col-md-2 mt-5">
+            <button class="btn btn-primary text-white" (click)="searchCostumer()">Keresés</button>
+        </div>
+        <div class="cold-md-2">
+            <!--<app-pizza-form></app-pizza-form>-->
+        </div>
+    </div>
+
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-3 text-center" *ngFor="let costumer of costumerArray">
+            <div class="card text-dark bg-light mt-1">
+                <div class="card-header">
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-warning btn-sm"
+                                (click)="navigateToCostumerForm(costumer.id)"><i class="bi bi-gear"></i></button>
+                        </div>
+                        <div class="col-md-8">
+                            <h4>{{costumer.name}}</h4>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-danger btn-sm float-right"
+                                (click)="open(mymodal, costumer.id)"><i class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <ng-template #mymodal let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">{{costumer.name}} törlése</h4>
+                            <button type="button" class="close" aria-label="Close"
+                                (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Biztos, hogy törlöd a {{costumer.name}} nevű vásárlót?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger"
+                                (click)="modal.close('Save click')">Törlés</button>
+                            <button type="button" class="btn btn-outline-dark" aria-label="Close"
+                                (click)="modal.dismiss('Cross click')">
+                                Mégsem
+                            </button>
+
+                        </div>
+                    </ng-template>
+                </div>
+
+                <div class="card-body">
+                    <h5 class="card-title">+36{{costumer.telephonePrefix}} {{costumer.telephone}}</h5>
+                    <p class="card-text">{{costumer.zip}} {{costumer.city}},<br />{{costumer.address1}} út
+                        {{costumer.address2}}.</p>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-outline-primary col-md-12"
+                        *ngIf="selectedCostumer!=costumer; else buttonSelected"
+                        (click)="selectCostumer(costumer)">Kiválaszt</button>
+                    <ng-template #buttonSelected><button class=" btn
+                                                    btn-primary btn btn-primary col-md-12">Kiválaszt</button>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

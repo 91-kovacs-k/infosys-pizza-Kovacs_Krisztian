@@ -1,0 +1,75 @@
+<div class="row justify-content-center">
+    <div class="col-md-3 mt-5">
+        <form [formGroup]="newCostumer">
+            <label for="name">Vevő neve</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+            <div class="text-danger" *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+                <small *ngIf="name?.errors?.required">A nevet kötelező megadni!</small>
+            </div>
+
+            <label for="zip">Irányítószám</label>
+            <input type="number" class="form-control" id="zip" formControlName="zip">
+            <div class="text-danger" *ngIf="zip?.invalid && (zip?.dirty || zip?.touched)">
+                <small *ngIf="zip?.errors?.required">Az irányítószámot kötelező megadni!</small>
+                <small *ngIf="zip?.errors?.min || zip?.errors?.max">1000 és 9985 közötti számot adj
+                    meg!</small>
+            </div>
+
+            <label for="city">Város</label>
+            <input type="text" class="form-control" id="city" formControlName="city">
+            <div class="text-danger" *ngIf="city?.invalid && (city?.dirty || city?.touched)">
+                <small *ngIf="city?.errors?.required">A várost kötelező megadni!</small>
+            </div>
+
+            <label for="address1">Utca</label>
+            <input type="text" class="form-control" id="address1" formControlName="address1">
+            <div class="text-danger" *ngIf="address1?.invalid && (address1?.dirty || address1?.touched)">
+                <small *ngIf="address1?.errors?.required">Az utcát kötelező megadni!</small>
+            </div>
+
+            <label for="address2">Házszám</label>
+            <input type="number" class="form-control" id="address2" formControlName="address2">
+            <div class="text-danger" *ngIf="address2?.invalid && (address2?.dirty || address2?.touched)">
+                <small *ngIf="address2?.errors?.pattern">Számot adj
+                    meg!</small>
+                <small *ngIf="address2?.errors?.required">A házszámot kötelező megadni!</small>
+                <small *ngIf="address2?.errors?.min || address2?.errors?.max">1 és 873 közötti számot adj
+                    meg!</small>
+
+            </div>
+
+
+            <label for="telephonePrefix">Telefonszám</label>
+            <div class="row">
+                <div class="col-md-3">
+                    <select class="form-control mt-2" id="telephonePrefix" formControlName="telephonePrefix" required>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="70">70</option>
+                    </select>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" class="form-control mt-2" id="telephone" placeholder="1234567"
+                        formControlName="telephone">
+                </div>
+            </div>
+            <div class="text-danger"
+                *ngIf="telephonePrefix?.invalid && (telephonePrefix?.dirty || telephonePrefix?.touched)">
+                <small *ngIf="telephonePrefix?.errors?.required">Az előhívót kötelező megadni!</small>
+            </div>
+            <div class="text-danger" *ngIf="telephone?.invalid && (telephone?.dirty || telephone?.touched)">
+                <small *ngIf="telephone?.errors?.required">A telefonszámot kötelező megadni!</small>
+                <small *ngIf="telephone?.errors?.pattern">"1234567"
+                    formátumban add meg a
+                    telefonszámot! </small>
+                <small *ngIf="telephone?.errors?.minlength || telephone?.errors?.maxlength">7 db számot adj
+                    meg!</small>
+            </div>
+
+
+            <button class="btn btn-primary mt-2" (click)="addCostumer()" [disabled]="newCostumer.invalid">
+                Vevő hozzáadása
+            </button>
+        </form>
+    </div>
+</div>

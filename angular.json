@@ -28,6 +28,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -65,7 +66,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "infosys-pizza:build"
+            "browserTarget": "infosys-pizza:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {

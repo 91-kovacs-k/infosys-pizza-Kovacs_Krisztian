@@ -1,0 +1,39 @@
+<div class="row justify-content-center">
+    <div class="col-md-3 mt-5">
+        <form [formGroup]="newPizza">
+            <label for="name">Pizza neve</label>
+            <input type="text" class="form-control" id="name" formControlName="name">
+
+            <label for="description">Összetevők</label>
+            <input type="text" class="form-control" id="description" formControlName="description">
+
+            <label for="size">Méret</label>
+            <select class="form-control" id="size" formControlName="size">
+                <option>32</option>
+                <option>48</option>
+            </select>
+
+            <label for="preparationTime">Elkészítési idő</label>
+            <select class="form-control" id="preparationTime" formControlName="preparationTime">
+                <option>20</option>
+            </select>
+
+            <label for="price">Ár</label>
+            <input type="number" class="form-control" id="price" formControlName="price">
+            <div class="text-danger" *ngIf="price?.invalid && (price?.dirty || price?.touched)">
+                <small *ngIf="price?.errors?.min || price?.errors?.max">Az ár legyen minimum 1000 Ft maximum 5000
+                    Ft.</small>
+            </div>
+
+            <label for="imgUrl">Kép URL</label>
+            <input type="text" class="form-control" id="imgUrl" formControlName="imgUrl">
+            <div class="text-danger" *ngIf="imgUrl?.invalid  && (imgUrl?.dirty || imgUrl?.touched)">
+                <small *ngIf="imgUrl?.errors?.pattern">A kép URL-je nem helyes.</small>
+            </div>
+
+            <button class="btn btn-primary mt-2" (click)="addPizza()" [disabled]="newPizza.invalid">
+                Mentés
+            </button>
+        </form>
+    </div>
+</div>

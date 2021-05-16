@@ -1,0 +1,90 @@
+<div class="container">
+    <h3 class="text-center mt-3">Válassz pizzát!</h3>
+    <div class="row justify-content-center">
+        <div class="col-md-4 mt-5">
+            <input type="text" placeholder="Kereséshez add meg a pizza nevét" class="form-control"
+                [(ngModel)]="pizzaKeyword" (keyup.enter)="searchPizza()">
+        </div>
+        <div class="col-md-2 mt-5">
+            <button class="btn btn-primary text-white" (click)="searchPizza()">Keresés</button>
+        </div>
+        <div class="cold-md-2">
+            <!--<app-pizza-form></app-pizza-form>-->
+        </div>
+    </div>
+
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-4 text-center" *ngFor="let pizza of pizzaArray">
+            <div class="card text-dark bg-light mt-1">
+                <div class="card-header">
+                    <!--<app-modify-pizza [oldPizza]="pizza"></app-modify-pizza>-->
+
+                    <!--<app-delete-pizza
+                                [oldPizza]="pizza">
+                            </app-delete-pizza>-->
+                    <div class="row">
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-warning btn-sm" (click)="navigateToPizzaForm(pizza.id)"><i
+                                    class="bi bi-gear"></i></button>
+                        </div>
+                        <div class="col-md-8">
+                            <h3>{{pizza.name}}</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-danger btn-sm" (click)="open(mymodal, pizza.id)"><i
+                                    class="bi bi-trash"></i></button>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                    <ng-template #mymodal let-modal>
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-basic-title">{{pizza.name}} törlése</h4>
+                            <button type="button" class="close" aria-label="Close"
+                                (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Biztos, hogy törlöd a {{pizza.name}} pizzát?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-danger"
+                                (click)="modal.close('Save click')">Törlés</button>
+                            <button type="button" class="btn btn-outline-dark" aria-label="Close"
+                                (click)="modal.dismiss('Cross click')">
+                                Mégsem
+                            </button>
+
+                        </div>
+                    </ng-template>
+                </div>
+                <img src="{{pizza.imgUrl}}" class="card-img-top" alt="pizza-kep">
+                <div class="card-body">
+                    <h3 class="card-title"><span class="badge bg-success">{{pizza.price}} Ft</span>
+                    </h3>
+                    <p class="card-text">{{pizza.description}}<br />Méret: {{pizza.size}} cm<br />Sütés ideje:
+                        {{pizza.preparationTime}} perc<br />Kiválasztott
+                        mennyiség:
+                        {{pizza.selected}}
+                    </p>
+
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn btn-outline-primary custom" *ngIf=" !selectedPizza.includes(pizza); else
+                                                    buttonSelected2" (click)="selectPizza(pizza)">+</button>&nbsp;
+                    <ng-template #buttonSelected2><button class="btn
+                                                    btn-primary custom" (click)="selectPizza(pizza)">+</button>
+                    </ng-template><button class="btn btn-outline-danger custom ml-1"
+                        (click)="deselectPizza(pizza)">-</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
