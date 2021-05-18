@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import PizzaController from './controller/pizza.controller';
 import CostumerController from './controller/costumer.controller';
-import OvenController from './controller/oven.controller';
 import OrderController from './controller/order.controller';
+import OvenController from './controller/oven.controller';
 
 export function getRouter(): Router {
   const router = Router();

@@ -62,7 +62,7 @@ export class OrderComponent implements OnInit {
       id: [],
       quantity: [quantity],
       remainingQuantity: [remainingQuantity],
-      costumer: [buyer],
+      costumer: [buyer.name],
       selectedPizza: [selectedPizzaArray],
       destinationLog: [destinationLog],
       pizzaLog: [pizzaLog],
@@ -72,6 +72,7 @@ export class OrderComponent implements OnInit {
     });
 
     await this.orderService.addOrder(newOrder.value);
+    this.resetValues();
   }
 
   destinationLogger(costumer: Costumer) {
@@ -115,6 +116,18 @@ export class OrderComponent implements OnInit {
       }
     }
     return sum;
+  }
+
+  resetValues() {
+    this.costumers.forEach((costumer) => (costumer.isSelected = false));
+    this.pizzaArray.forEach((pizza) => (pizza.selected = 0));
+
+    for (let i = 0; i < this.costumers.length; i++) {
+      this.costumerService.updateCostumer(this.costumers[i]);
+    }
+    for (let i = 0; i < this.pizzaArray.length; i++) {
+      this.pizzaService.updatePizza(this.pizzaArray[i]);
+    }
   }
   /*
   public waitLogger(order: Order, waitTime: number) {

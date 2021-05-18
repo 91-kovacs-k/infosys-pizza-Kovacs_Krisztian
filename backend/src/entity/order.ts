@@ -1,12 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToMany,
-  JoinTable,
-} from 'typeorm';
-import { Costumer } from './costumer';
-import { Pizza } from './pizza';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Order {
@@ -19,13 +11,8 @@ export class Order {
   @Column()
   remainingQuantity: number;
 
-  @ManyToMany((type) => Costumer)
-  @JoinTable()
-  costumer: Costumer;
-
-  @ManyToMany((type) => Pizza)
-  @JoinTable()
-  selectedPizza: Pizza[];
+  @Column()
+  costumer: string;
 
   @Column()
   destinationLog: string;

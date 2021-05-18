@@ -4,6 +4,8 @@ import { CostumerFormComponent } from './costumer-form/costumer-form.component';
 import { CostumerListComponent } from './costumer-list/costumer-list.component';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderComponent } from './order/order.component';
+import { OvenListComponent } from './oven-list/oven-list.component';
+import { OvenComponent } from './oven/oven.component';
 import { PizzaFormComponent } from './pizza-form/pizza-form.component';
 import { PizzaListComponent } from './pizza-list/pizza-list.component';
 
@@ -31,6 +33,14 @@ const routes: Routes = [
   {
     path: 'order-list',
     component: OrderListComponent,
+  },
+  {
+    path: 'oven-list',
+    component: OvenListComponent,
+  },
+  {
+    path: 'oven-config',
+    component: OvenComponent,
   },
 ];
 

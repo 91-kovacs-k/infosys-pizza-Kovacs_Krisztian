@@ -12,7 +12,7 @@ export class Oven {
   availability: boolean;
 
   @Column()
-  order: number; //fk
+  order: string;
 
   @Column()
   pizza: number;

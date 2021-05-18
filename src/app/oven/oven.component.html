@@ -1,0 +1,28 @@
+<div class="row justify-content-center text-center mt-5">
+    <div class="col-md-3">
+        <form [formGroup]="ovenConfiguration">
+            <input type="number" class="form-control text-center" id="numberOfOvens" formControlName="numberOfOvens"
+                placeholder="Add meg a sütők számát" required [disabled]="!ovenConfiguration.valid"
+                (keyup.enter)="configureOvens()">
+            <div class="text-danger" *ngIf="numberOfOvens?.invalid && (numberOfOvens?.dirty || numberOfOvens?.touched)">
+                <small *ngIf="numberOfOvens?.errors?.required">A sütők számának megadása kötelező!</small>
+                <small *ngIf="numberOfOvens?.errors?.min || numberOfOvens?.errors?.max">1 és 10 közötti számot adj
+                    meg!</small>
+            </div>
+            <input type="number" class="form-control text-center mt-2" id="bakeTime" formControlName="bakeTime"
+                placeholder="Add meg a sütés idejét" required (keyup.enter)="configureOvens()">
+            <div class="text-danger" *ngIf="bakeTime?.invalid && (bakeTime?.dirty || bakeTime?.touched)">
+                <small *ngIf="bakeTime?.errors?.required">A sütők számának megadása kötelező!</small>
+                <small *ngIf="bakeTime?.errors?.min || bakeTime?.errors?.max">1 és 40
+                    közötti számot adj
+                    meg!</small>
+            </div>
+            <!--
+                <button type="submit" class="btn btn-primary" [disabled]="!ovenInicialization.valid"
+                    (click)="kitchen.sutoInicializalas(ovenInicialization)">Nyitás</button>
+                    -->
+            <button type="submit" class="btn btn-primary mt-2" [disabled]="!ovenConfiguration.valid"
+                (click)="configureOvens()">Beállít</button>
+        </form>
+    </div>
+</div>

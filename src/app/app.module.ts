@@ -12,9 +12,21 @@ import { CostumerListComponent } from './costumer-list/costumer-list.component';
 import { CostumerFormComponent } from './costumer-form/costumer-form.component';
 import { OrderComponent } from './order/order.component';
 import { OrderListComponent } from './order-list/order-list.component';
+import { OvenComponent } from './oven/oven.component';
+import { OvenListComponent } from './oven-list/oven-list.component';
 
 @NgModule({
-  declarations: [AppComponent, PizzaListComponent, PizzaFormComponent, CostumerListComponent, CostumerFormComponent, OrderComponent, OrderListComponent],
+  declarations: [
+    AppComponent,
+    PizzaListComponent,
+    PizzaFormComponent,
+    CostumerListComponent,
+    CostumerFormComponent,
+    OrderComponent,
+    OrderListComponent,
+    OvenComponent,
+    OvenListComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
