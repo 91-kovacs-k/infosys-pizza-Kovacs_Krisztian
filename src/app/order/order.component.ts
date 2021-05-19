@@ -29,6 +29,7 @@ export class OrderComponent implements OnInit {
   orders: Order[] = [];
   buyer!: Costumer;
   selectedPizzaArray: Pizza[] = [];
+  success: boolean = false;
 
   async ngOnInit() {
     this.costumers = await this.costumerService.loadCostumers();
@@ -90,6 +91,7 @@ export class OrderComponent implements OnInit {
     await this.orderService.addOrder(newOrder.value);
     this.showSuccess();
     await this.wait(3);
+    this.resetValues();
     this.router.navigateByUrl('/order-list');
   }
 
@@ -136,15 +138,15 @@ export class OrderComponent implements OnInit {
     return sum;
   }
 
-  resetValues() {
+  async resetValues() {
     this.costumers.forEach((costumer) => (costumer.isSelected = false));
     this.pizzaArray.forEach((pizza) => (pizza.selected = 0));
 
     for (let i = 0; i < this.costumers.length; i++) {
-      this.costumerService.updateCostumer(this.costumers[i]);
+      await this.costumerService.updateCostumer(this.costumers[i]);
     }
     for (let i = 0; i < this.pizzaArray.length; i++) {
-      this.pizzaService.updatePizza(this.pizzaArray[i]);
+      await this.pizzaService.updatePizza(this.pizzaArray[i]);
     }
   }
 
@@ -152,9 +154,10 @@ export class OrderComponent implements OnInit {
     return toast.textOrTpl instanceof TemplateRef;
   }
   showSuccess() {
+    this.success = true;
     this.toastService.show('Sikeres rendelés rögzítés!', {
       classname: 'bg-success text-light',
-      delay: 3000,
+      delay: 1500,
     });
   }
 

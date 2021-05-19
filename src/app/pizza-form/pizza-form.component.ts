@@ -15,6 +15,7 @@ export class PizzaFormComponent implements OnInit {
   closeResult = '';
   pizzaArray!: Pizza[];
   bakeTime = this.pizzaService.bakeTime;
+  success: boolean = false;
 
   constructor(
     private modalService: NgbModal,
@@ -111,9 +112,10 @@ export class PizzaFormComponent implements OnInit {
     return toast.textOrTpl instanceof TemplateRef;
   }
   showSuccess() {
+    this.success = true;
     this.toastService.show('Sikeres pizza rögzítés!', {
       classname: 'bg-success text-light',
-      delay: 3000,
+      delay: 1500,
     });
   }
 

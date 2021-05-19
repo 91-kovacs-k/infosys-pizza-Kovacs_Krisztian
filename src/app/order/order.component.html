@@ -61,13 +61,19 @@
 </div>
 <div class="row justify-content-center mt-5">
     <ngb-toast *ngFor="let toast of toastService.toasts" [class]="toast.classname" [autohide]="true"
-        [delay]="toast.delay || 5000" (hidden)="toastService.remove(toast)">
+        [delay]="toast.delay || 3000" (hidden)="toastService.remove(toast)">
         <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
             <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
         </ng-template>
 
         <ng-template #text>{{ toast.textOrTpl }}</ng-template>
     </ngb-toast>
+    <div class="row justify-content-center mt-2" *ngIf="success">
+        <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
 </div>
 <div class="container">
     <div class="row mt-4 justify-content-center">

@@ -15,6 +15,7 @@ export class CostumerFormComponent implements OnInit {
   closeResult = '';
   costumers!: Costumer[];
   costumerKeyword!: string;
+  success: boolean = false;
 
   constructor(
     private modalService: NgbModal,
@@ -131,9 +132,10 @@ export class CostumerFormComponent implements OnInit {
     return toast.textOrTpl instanceof TemplateRef;
   }
   showSuccess() {
+    this.success = true;
     this.toastService.show('Sikeres vevő rögzítés!', {
       classname: 'bg-success text-light',
-      delay: 3000,
+      delay: 1500,
     });
   }
 
