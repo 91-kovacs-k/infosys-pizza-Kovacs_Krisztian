@@ -74,7 +74,6 @@ export class OrderComponent implements OnInit {
     });
 
     await this.orderService.addOrder(newOrder.value);
-    this.resetValues();
   }
 
   destinationLogger(costumer: Costumer) {
