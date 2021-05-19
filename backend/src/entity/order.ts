@@ -1,4 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Order {
@@ -28,4 +33,7 @@ export class Order {
 
   @Column()
   status: string;
+
+  @CreateDateColumn()
+  orderTime: Date;
 }

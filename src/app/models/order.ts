@@ -8,4 +8,5 @@ export interface Order {
   priceLog: string; // az ár
   waitLog: string; // az elkészülés idejéhez tartozó információk
   status: string;
+  orderTime: Date;
 }

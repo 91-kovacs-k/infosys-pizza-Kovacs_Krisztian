@@ -57,6 +57,7 @@ export class OrderComponent implements OnInit {
     let priceLog = this.priceCalculator(selectedPizzaArray);
     let waitlog;
     let status = 'waiting';
+    let orderTime = new Date();
 
     let newOrder = this.fb.group({
       id: [],
@@ -69,6 +70,7 @@ export class OrderComponent implements OnInit {
       priceLog: [priceLog.toString()],
       waitLog: [''],
       status: [status],
+      orderTime: [orderTime],
     });
 
     await this.orderService.addOrder(newOrder.value);
