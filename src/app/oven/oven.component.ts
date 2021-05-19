@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Oven } from '../models/oven';
 import { Pizza } from '../models/pizza';
 import { OvenService } from '../services/oven.service';
 import { PizzaService } from '../services/pizza.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-oven',
@@ -14,7 +15,8 @@ export class OvenComponent implements OnInit {
   constructor(
     private ovenService: OvenService,
     private fb: FormBuilder,
-    private pizzaService: PizzaService
+    private pizzaService: PizzaService,
+    public toastService: ToastService
   ) {}
 
   ovens: Oven[] = [];
@@ -39,7 +41,7 @@ export class OvenComponent implements OnInit {
     return this.ovenConfiguration.get('bakeTime');
   }
 
-  configureOvens() {
+  async configureOvens() {
     let tmp = this.ovenConfiguration.value;
     let bakeTime = tmp.bakeTime;
     let numberOfOvens = tmp.numberOfOvens;
@@ -66,7 +68,6 @@ export class OvenComponent implements OnInit {
         this.ovenService.updateOven(this.ovens[i]);
       }
       let remaining = numberOfOvens - this.ovens.length;
-      alert(remaining);
       let newOven = this.fb.group({
         id: [],
         ovenTimer: [''],
@@ -80,5 +81,22 @@ export class OvenComponent implements OnInit {
         this.ovenService.addOven(newOven.value);
       }
     }
+
+    this.showSuccess();
+    await this.wait(3);
+  }
+
+  isTemplate(toast: any) {
+    return toast.textOrTpl instanceof TemplateRef;
+  }
+  showSuccess() {
+    this.toastService.show('Sikeres sütő konfigurálás!', {
+      classname: 'bg-success text-light',
+      delay: 3000,
+    });
+  }
+
+  wait(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms * 1000));
   }
 }

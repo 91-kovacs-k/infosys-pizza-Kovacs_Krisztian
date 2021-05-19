@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Pizza } from '../models/pizza';
 import { PizzaService } from '../services/pizza.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-pizza-form',
@@ -20,7 +21,8 @@ export class PizzaFormComponent implements OnInit {
     private fb: FormBuilder,
     private pizzaService: PizzaService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public toastService: ToastService
   ) {}
 
   newPizza = this.fb.group({
@@ -64,6 +66,8 @@ export class PizzaFormComponent implements OnInit {
     await this.pizzaService.addPizza(pizza);
 
     this.newPizza.reset();
+    this.showSuccess();
+    await this.wait(3);
     this.router.navigateByUrl('/');
   }
 
@@ -102,5 +106,18 @@ export class PizzaFormComponent implements OnInit {
         }
       }
     }
+  }
+  isTemplate(toast: any) {
+    return toast.textOrTpl instanceof TemplateRef;
+  }
+  showSuccess() {
+    this.toastService.show('Sikeres pizza rögzítés!', {
+      classname: 'bg-success text-light',
+      delay: 3000,
+    });
+  }
+
+  wait(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms * 1000));
   }
 }

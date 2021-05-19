@@ -1,3 +1,14 @@
+<div class="row justify-content-center mt-5">
+    <ngb-toast *ngFor="let toast of toastService.toasts" [class]="toast.classname" [autohide]="true"
+        [delay]="toast.delay || 5000" (hidden)="toastService.remove(toast)">
+        <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
+            <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
+        </ng-template>
+
+        <ng-template #text>{{ toast.textOrTpl }}</ng-template>
+    </ngb-toast>
+</div>
+
 <div class="row justify-content-center">
     <div class="col-md-3 mt-5">
         <form [formGroup]="newPizza">
@@ -34,6 +45,7 @@
             <button class="btn btn-primary mt-2" (click)="addPizza()" [disabled]="newPizza.invalid">
                 Mentés
             </button>
+
         </form>
     </div>
 </div>

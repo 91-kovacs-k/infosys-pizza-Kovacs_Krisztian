@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Costumer } from '../models/costumer';
 import { CostumerService } from '../services/costumer.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-costumer-form',
@@ -20,7 +21,8 @@ export class CostumerFormComponent implements OnInit {
     private fb: FormBuilder,
     private costumerService: CostumerService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public toastService: ToastService
   ) {}
 
   newCostumer = this.fb.group({
@@ -82,6 +84,8 @@ export class CostumerFormComponent implements OnInit {
     await this.costumerService.addCostumer(costumer);
 
     this.newCostumer.reset();
+    this.showSuccess();
+    await this.wait(3);
     this.router.navigateByUrl('/costumer-list');
   }
 
@@ -121,5 +125,19 @@ export class CostumerFormComponent implements OnInit {
         }
       }
     }
+  }
+
+  isTemplate(toast: any) {
+    return toast.textOrTpl instanceof TemplateRef;
+  }
+  showSuccess() {
+    this.toastService.show('Sikeres vevő rögzítés!', {
+      classname: 'bg-success text-light',
+      delay: 3000,
+    });
+  }
+
+  wait(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms * 1000));
   }
 }
