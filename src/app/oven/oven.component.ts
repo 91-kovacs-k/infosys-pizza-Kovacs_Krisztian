@@ -51,6 +51,7 @@ export class OvenComponent implements OnInit {
 
     for (let i = 0; i < this.pizzaArray.length; i++) {
       this.pizzaArray[i].preparationTime = bakeTime.toString();
+      this.pizzaService.bakeTime = bakeTime;
       await this.pizzaService.updatePizza(this.pizzaArray[i]);
     }
 
