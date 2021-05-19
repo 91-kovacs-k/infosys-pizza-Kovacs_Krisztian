@@ -1,4 +1,4 @@
-export const DefaultPizza = [
+export const DefaultCostumers = [
   {
     id: 1,
     name: 'Kiss Jóska',

@@ -5,7 +5,8 @@ import express from 'express';
 import { getRouter } from './routes';
 
 createConnection(connectionOptions)
-  .then(() => {
+  .then(async (conn) => {
+    await conn.runMigrations();
     const app = express();
 
     app.use(express.json());
