@@ -24,10 +24,10 @@ export class OvenListComponent implements OnInit {
     this.calculateOvenTimers();
   }
 
-  calculateOvenTimers(){ 
+  calculateOvenTimers() {
     let freeOvens = 0;
     let timeNow = new Date();
-
+    /*
     for(let i = 0; i < this.ovens.length; i++){
       if((this.ovens[i].startTime - timeNow) >= 20){
         this.ovens[i].availability = true;
@@ -54,7 +54,6 @@ export class OvenListComponent implements OnInit {
         }
     }
     }
-    
+    */
   }
-  
 }

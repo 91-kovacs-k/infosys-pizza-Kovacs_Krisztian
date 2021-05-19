@@ -48,6 +48,7 @@ export class CostumerFormComponent implements OnInit {
         Validators.maxLength(7),
       ],
     ],
+    isSelected: [false],
   });
   get name() {
     return this.newCostumer.get('name');
