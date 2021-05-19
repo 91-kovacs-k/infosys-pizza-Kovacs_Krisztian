@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Costumer } from '../models/costumer';
 import { Order } from '../models/order';
 import { Pizza } from '../models/pizza';
 import { CostumerService } from '../services/costumer.service';
 import { OrderService } from '../services/order.service';
 import { PizzaService } from '../services/pizza.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-order',
@@ -17,20 +19,26 @@ export class OrderComponent implements OnInit {
     private pizzaService: PizzaService,
     private costumerService: CostumerService,
     private orderService: OrderService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public toastService: ToastService,
+    private router: Router
   ) {}
 
   costumers: Costumer[] = [];
   pizzaArray: Pizza[] = [];
   orders: Order[] = [];
+  buyer!: Costumer;
+  selectedPizzaArray: Pizza[] = [];
 
   async ngOnInit() {
     this.costumers = await this.costumerService.loadCostumers();
     this.pizzaArray = await this.pizzaService.loadPizza();
     this.orders = await this.orderService.loadOrders();
+    this.buyer = this.getBuyer();
+    this.selectedPizzaArray = this.getSelectedPizzaArray();
   }
 
-  async makeOrder() {
+  getBuyer() {
     let buyer!: Costumer;
     for (let i = 0; i < this.costumers.length; i++) {
       if (this.costumers[i].isSelected == true) {
@@ -38,23 +46,29 @@ export class OrderComponent implements OnInit {
         break;
       }
     }
+    return buyer;
+  }
 
+  getSelectedPizzaArray() {
     let selectedPizzaArray: Pizza[] = [];
     for (let i = 0; i < this.pizzaArray.length; i++) {
       if (this.pizzaArray[i].selected > 0) {
         selectedPizzaArray.push(this.pizzaArray[i]);
       }
     }
+    return selectedPizzaArray;
+  }
 
+  async makeOrder() {
     let quantity = 0;
-    for (let i = 0; i < selectedPizzaArray.length; i++) {
-      quantity += selectedPizzaArray[i].selected;
+    for (let i = 0; i < this.selectedPizzaArray.length; i++) {
+      quantity += this.selectedPizzaArray[i].selected;
     }
 
     let remainingQuantity = quantity;
-    let destinationLog = this.destinationLogger(buyer);
-    let pizzaLog = this.listSelectedPizza(selectedPizzaArray);
-    let priceLog = this.priceCalculator(selectedPizzaArray);
+    let destinationLog = this.destinationLogger(this.buyer);
+    let pizzaLog = this.listSelectedPizza(this.selectedPizzaArray);
+    let priceLog = this.priceCalculator(this.selectedPizzaArray);
     let waitlog;
     let status = 'waiting';
     let orderTime = new Date();
@@ -63,8 +77,8 @@ export class OrderComponent implements OnInit {
       id: [],
       quantity: [quantity],
       remainingQuantity: [remainingQuantity],
-      costumer: [buyer.name],
-      selectedPizza: [selectedPizzaArray],
+      costumer: [this.buyer.name],
+      selectedPizza: [this.selectedPizzaArray],
       destinationLog: [destinationLog],
       pizzaLog: [pizzaLog],
       priceLog: [priceLog.toString()],
@@ -74,6 +88,9 @@ export class OrderComponent implements OnInit {
     });
 
     await this.orderService.addOrder(newOrder.value);
+    this.showSuccess();
+    await this.wait(3);
+    this.router.navigateByUrl('/order-list');
   }
 
   destinationLogger(costumer: Costumer) {
@@ -130,38 +147,18 @@ export class OrderComponent implements OnInit {
       this.pizzaService.updatePizza(this.pizzaArray[i]);
     }
   }
-  /*
-  public waitLogger(order: Order, waitTime: number) {
-    if (waitTime == 0) {
-      if (this.getStatus() == 'done') {
-        this.waitLog = 'A rendelés elkészült!';
-      } else if (this.getStatus() == 'deleted') {
-        this.waitLog = 'A rendelés törölve!';
-      }
-    } else {
-      let minutesInString;
-      let secondsInString;
-      let minutes = Math.floor(waitTime / 60);
-      let seconds = waitTime - minutes * 60;
-      // minutes += 20;  // a szállítás idejét hozzáadom
 
-      if (minutes < 10) {
-        minutesInString = '0' + minutes.toString();
-      } else {
-        minutesInString = minutes.toString();
-      }
-      if (seconds < 10) {
-        secondsInString = '0' + seconds.toString();
-      } else {
-        secondsInString = seconds.toString();
-      }
-      return (
-        'Az elkészülésig ' +
-        minutesInString +
-        ':' +
-        secondsInString +
-        ' van hátra!\n'
-      );
-    }
-  }*/
+  isTemplate(toast: any) {
+    return toast.textOrTpl instanceof TemplateRef;
+  }
+  showSuccess() {
+    this.toastService.show('Sikeres rendelés rögzítés!', {
+      classname: 'bg-success text-light',
+      delay: 3000,
+    });
+  }
+
+  wait(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms * 1000));
+  }
 }

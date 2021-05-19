@@ -1,1 +1,79 @@
-<button class="btn btn-primary" (click)="makeOrder()">Rendelés leadása</button>
+<div class="container">
+    <div class="costumerSelected" *ngIf="buyer; else noCostumerSelected">
+        <h3 class="text-center mt-3">Kiválasztott vevő</h3>
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-3 text-center">
+                <div class="card text-dark bg-light mt-1">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>{{buyer.name}}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <h5 class="card-title">+36{{buyer.telephonePrefix}} {{buyer.telephone}}</h5>
+                        <p class="card-text">{{buyer.zip}} {{buyer.city}},<br />{{buyer.address1}} út
+                            {{buyer.address2}}.</p>
+                    </div>
+                    <div class="card-footer text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #noCostumerSelected>
+        <h3 class="text-center mt-3"><span class="badge bg-danger">Nincs kiválasztva vevő</span></h3>
+    </ng-template>
+</div>
+<div class="container">
+    <div class="row mt-4 justify-content-center" *ngIf="selectedPizzaArray.length > 0; else noPizzaSelected">
+        <h3 class="text-center mt-3">Kiválasztott pizzák</h3>
+        <div class="col-md-4 text-center" *ngFor="let pizza of selectedPizzaArray">
+            <div class="card text-dark bg-light mt-1">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3>{{pizza.name}}</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <img src="{{pizza.imgUrl}}" class="card-img-top" alt="pizza-kep">
+                <div class="card-body">
+                    <h3 class="card-title"><span class="badge bg-success">{{pizza.price}} Ft</span>
+                    </h3>
+                    <p class="card-text">{{pizza.description}}<br />Méret: {{pizza.size}} cm<br />Sütés ideje:
+                        {{pizza.preparationTime}} perc<br />Kiválasztott
+                        mennyiség:
+                        {{pizza.selected}}
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #noPizzaSelected>
+        <h3 class="text-center mt-3"><span class="badge bg-danger">Nincs kiválasztva pizza</span></h3>
+    </ng-template>
+</div>
+<div class="row justify-content-center mt-5">
+    <ngb-toast *ngFor="let toast of toastService.toasts" [class]="toast.classname" [autohide]="true"
+        [delay]="toast.delay || 5000" (hidden)="toastService.remove(toast)">
+        <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
+            <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
+        </ng-template>
+
+        <ng-template #text>{{ toast.textOrTpl }}</ng-template>
+    </ngb-toast>
+</div>
+<div class="container">
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-1">
+            <button class="btn btn-primary" (click)="makeOrder()"
+                [disabled]="!(buyer && selectedPizzaArray.length > 0)">Rendelés leadása</button>
+        </div>
+    </div>
+</div>
